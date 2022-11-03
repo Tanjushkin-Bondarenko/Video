@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video and JS</title>
+   <script src="https://kit.fontawesome.com/55d4f8f751.js" crossorigin="anonymous"></script>
+<style>
+    #videoPlayer{
+  display: grid;
+  border: 2px solid beige;
+  width: 800px;
+    }
+     #video{
+        width: 800px;
+        height: auto;
+        padding: 0;
+        grid-column: 1/2;
+        grid-row: 1/2;
+        }
+        #videoViolin{
+        display: none;
+        width: 800px;
+        height: auto;
+        padding: 0;
+        grid-column: 1/2;
+        grid-row: 1/2;
+        }
+        #videoSaxophone{
+        display: none;
+       width: 800px;
+        height: auto;
+        padding: 0;
+        grid-column: 1/2;
+        grid-row: 1/2;
+        }
+    i{
+        cursor: pointer;
+        margin-left: 5px;
+    }
+    i:hover{
+        transform: scale(1.5);
+    }
+    #controls{
+        background-color: beige;
+        height: 40px;
+         grid-column: 1/2;
+     grid-row: 2/2;
+     display: grid;
+     align-items:center;
+     justify-items: center;
+     width: 800px;
+    }
+    /* #play{
+        grid-column: 1/2;
+    } */
+    #pause{
+        grid-column: 1/2;
+        display: none;
+       
+    }
+    /* #stop{
+        grid-column: 2/3;
+    }
+    #backward{
+        grid-column: 3/4;
+    }
+    /* .fa-solid fa-volume-low{
+        grid-column: 4/5;
+    } */
+    /* .fa-solid fa-volume-high{
+       grid-column:5/6;
+    } */ 
+     #fullScreen{
+        grid-column: 21/23;
+    }
+</style>
+</head>
+<body>
+<div id="videoPlayer">
+    <video id="video" poster="piano.jpg">
+        <source src="piano.mp4">
+        <source src="piano.webm">
+    </video>
+    <video id="videoViolin" poster="violin.jpg">
+        <source src="violin.mp4">
+        <source src="violin.webm">
+    </video>
+    <video id="videoSaxophone" poster="saxophone.jpg">
+        <source src = "saxophone.mp4">
+        <source src = "saxophone.webm">
+    </video>
+    <div id="controls">
+        <i id="play" class="fa-solid fa-play"></i>
+        <i id="pause" class="fa-solid fa-pause"></i>
+        <i id="stop" class="fa-solid fa-stop"></i>
+        <i id="backward" class="fa-solid fa-backward"></i>
+        <i id="forward" class="fa-sharp fa-solid fa-forward"></i>
+        <i id="volumeLow" class="fa-solid fa-volume-low"></i>
+        <i id="volumeHigh" class="fa-solid fa-volume-high"></i>
+        <i id="fullScreen" class="fa-sharp fa-solid fa-expand"></i>
+    </div>
+</div>
+<div id="anotherBtn">
+    <button id="pianoBtn">Play width piano</button>
+    <button id="violinBtn">Play width violin</button>
+    <button id="saxophoneBtn">Play width saxophone</button>
+</div>
+    <script>
+let elem = function (id){
+    return document.getElementById(id)
+}
+let video;
+document.addEventListener("load", function(){
+    video = elem("video")
+})
+elem("violinBtn").addEventListener("click", function(){
+    if(video == null){
+        video = elem("videoViolin");
+          elem("videoViolin").style= "display: block";
+         elem("video").style = "display: none";
+   elem("videoSaxophone").style = "display: none"
+    }
+ else if(video.played){
+        video.pause()
+        video.currentTime = 0;
+        video = null;
+        elem("pause").style ="display: none";
+   elem("play").style ="display: block";
+    elem("videoViolin").style= "display: block";
+     video = elem("videoViolin")
+   elem("video").style = "display: none";
+   elem("videoSaxophone").style = "display: none"
+  
+  }else{
+       elem("videoViolin").style = "display: block";
+     video = elem("videoViolin");
+    elem("video").style = "display: none";
+    elem("videoSaxophone").style = "display: none";
+     
+    }
+
+   
+  })
+  elem("saxophoneBtn").addEventListener("click", function(){
+    if(video == null){
+          elem("videoSaxophone").style = "display: block";  
+          video = elem("videoSaxophone");
+    }
+    if(video.played){
+        video.pause()
+        video.currentTime = 0;
+        video = null;
+        elem("pause").style ="display: none";
+   elem("play").style ="display: block"
+    elem("videoSaxophone").style = "display: block"
+    video = elem("videoSaxophone");
+        elem("video").style = "display: none";
+        elem("videoViolin").style = "display: none";
+   }else{
+       elem("videoSaxophone").style = "display: block"
+    elem("video").style = "display: none";
+        elem("videoViolin").style = "display: none";
+         video = elem("videoSaxophone");
+        }
+  });
+  elem("pianoBtn").addEventListener("click", function(){
+    if(video == null){
+        video = elem("video")
+    }
+    else if(video.played){
+        video.pause();
+        video.currentTime =0;
+         video = null;
+        elem("pause").style ="display: none";
+   elem("play").style ="display: block"
+elem("videoSaxophone").style = "display: none";
+elem("videoViolin").style = "display: none";
+elem("video").style = "display: block"
+video = elem("video")
+    }else{
+        elem("videoSaxophone").style = "display: none";
+elem("videoViolin").style = "display: none";
+elem("video").style = "display: block";
+video = elem("video")
+    }
+  })
+
+
+
+elem("play").addEventListener("click", function(e){
+    if(video == null){
+        video = elem("video")
+        video.play();
+        e.target.style="display: none"
+        elem("pause").style="display:block"
+    }
+    else if(video.paused){
+        video.play()
+        e.target.style="display: none"
+        elem("pause").style="display:block"
+    }
+})
+
+elem("pause").addEventListener("click", function(e){
+    video.pause();
+    e.target.style="display: none";
+    elem("play").style="display:block"
+})
+ elem("stop").addEventListener("click", function(e){
+    if(video.played){
+   video.pause();
+   video.currentTime = 0;
+   elem("pause").style ="display: none";
+   elem("play").style ="display: block"
+    }
+ });
+  elem("backward").addEventListener("click", function(){
+    if(video.played){
+video.currentTime -= 10
+    }
+  });
+  elem("forward").addEventListener("click", function(){
+    if(video.played){
+        video.currentTime += 10
+    }
+  });
+  elem("volumeLow").addEventListener("click", function(){
+    if(video.played){
+        video.volume -= 0.1
+    }
+  })
+  elem("volumeHigh").addEventListener("click", function(){
+    if(video.played){
+        video.volume += 0.1
+    }
+  });
+  elem("fullScreen").addEventListener("click", function(){
+    if(video.requestFullscreen){
+        video.requestFullscreen()
+    }
+  })
+  
+
+    </script>
+</body>
+</html>
